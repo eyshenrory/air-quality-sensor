@@ -9,4 +9,6 @@ SECTIONS
   .isr_vector : { KEEP(*(.isr_vector*)) } > FLASH
   .text : {  *(.text*) } > FLASH
   .rodata : { *(.rodata*) } > FLASH
+  .data : { *(.data*) } > RAM AT> FLASH
+  .bss : { *(.bss*) } > RAM
 }
