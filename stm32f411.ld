@@ -6,9 +6,11 @@ MEMORY
 
 SECTIONS
 {
+  _estack = ORIGIN(RAM) + LENGTH(RAM);
   .isr_vector : { KEEP(*(.isr_vector*)) } > FLASH
   .text : {  *(.text*) } > FLASH
-  .rodata : { *(.rodata*) } > FLASH
-  .data : { *(.data*) } > RAM AT> FLASH
-  .bss : { *(.bss*) } > RAM
+  .rodata : { *(.rodata*) . = ALIGN(4); } > FLASH
+  _sidata = LOADADDR(.data);
+  .data : { . = ALIGN(4); _sdata = .; *(.data*) . = ALIGN(4); _edata = .; } > RAM AT> FLASH
+  .bss : { . = ALIGN(4); _sbss = .; *(.bss*) . = ALIGN(4); _ebss = .; } > RAM
 }
